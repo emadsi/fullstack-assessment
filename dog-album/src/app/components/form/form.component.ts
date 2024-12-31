@@ -2,7 +2,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { DogService } from '../../services/dog.service';
 import { CommonModule } from '@angular/common';
-import { debounceTime, tap } from 'rxjs/operators';
 import { AlbumComponent } from "../album/album.component";
 
 @Component({
@@ -41,8 +40,8 @@ export class FormComponent {
   }
 
   fetchImages() {
-    const breed = this.dogForm.value.breed;
-    const count = this.dogForm.value.count;
+    const breed = this.dogForm.get('breed')?.value;
+    const count = this.dogForm.get('count')?.value;
 
     if (breed) {
       this.dogService.getByBreed(breed, count).subscribe((images) => (this.dogImages = images));
